@@ -98,6 +98,18 @@ textarea:focus{outline:2px solid var(--acc);outline-offset:-1px;background:#fff}
 @media(max-width:600px){.frow{grid-template-columns:104px 1fr 78px}}
 .note-caveat{background:#fff8e6;border:1px solid #f0e0b0;border-radius:10px;padding:10px 12px;
  font-size:13px;color:#6b5a20;margin-bottom:18px}
+.mbar{position:sticky;top:0;z-index:20;background:var(--bg);padding:10px 0 12px;margin:0 0 14px;display:flex;
+ flex-wrap:wrap;gap:8px;align-items:center;border-bottom:1px solid var(--line)}
+.mbar .ml{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+.chip{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;padding:6px 13px;
+ font-weight:600;font-size:13px;font-family:inherit;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.chip .n{background:#eef0f2;color:var(--mut);border-radius:999px;padding:1px 7px;font-size:11px}
+.chip:hover{border-color:var(--acc);color:var(--acc)}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.chip.on .n{background:rgba(255,255,255,.22);color:#fff}
+.chip.link{color:var(--mut)}
+.empty{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:18px;color:var(--mut);text-align:center;margin-bottom:14px}
+.empty[hidden]{display:none}
 footer{color:var(--mut);font-size:12px;margin-top:24px;text-align:center}
 @media(max-width:760px){
   .card{flex-direction:column-reverse;gap:14px}
@@ -108,14 +120,16 @@ footer{color:var(--mut);font-size:12px;margin-top:24px;text-align:center}
 }
 </style></head><body><div class="wrap">
 <h1>LP Dashboard — Unikatko EU</h1>
+<nav class="mbar" id="mbar" aria-label="Country"><span class="ml">Country</span><button class="chip on" data-market="all">All markets <span class="n">3</span></button><button class="chip" data-market="sk">Slovakia <span class="n">1</span></button><button class="chip" data-market="hu">Hungary <span class="n">1</span></button><button class="chip" data-market="cz">Czechia <span class="n">1</span></button><a class="chip link" href="https://rs.unikatko.com/dashboard/">Serbia ↗</a></nav>
+<p class="empty" id="mempty" hidden></p>
 <p class="lead">All generated landing pages, Shopify products and current pricing.
 Prices are in each market's own currency, as charged at checkout — never converted or summed across markets. Brand names are ours and stay as-is;
-the landing pages themselves remain in Serbian.</p>
+each landing page is written in its market's own language. Pick a country above to see only its pages.</p>
 
 <div class="note-caveat"><b>About notes:</b> notes are stored locally in this browser
 (localStorage) and are <b>not shared</b> with anyone else.</div>
 
-  <article class="card">
+  <article class="card" data-market="hu">
     <div class="body">
       <header><h2>VRHUNAC <span class="mkt" style="font:700 11px/1 system-ui;letter-spacing:.08em;background:#eef3ff;color:#1f4ea3;border-radius:6px;padding:3px 7px;vertical-align:middle">HUNGARY</span></h2><span class="sub">shilajit + ashwagandha gummies for men</span></header>
       <div class="grid">
@@ -143,7 +157,7 @@ the landing pages themselves remain in Serbian.</p>
     </a>
   </article>
 
-  <article class="card">
+  <article class="card" data-market="cz">
     <div class="body">
       <header><h2>VRHUNAC <span class="mkt" style="font:700 11px/1 system-ui;letter-spacing:.08em;background:#eef3ff;color:#1f4ea3;border-radius:6px;padding:3px 7px;vertical-align:middle">CZECH</span></h2><span class="sub">shilajit + ashwagandha gummies for men</span></header>
       <div class="grid">
@@ -171,7 +185,7 @@ the landing pages themselves remain in Serbian.</p>
     </a>
   </article>
 
-  <article class="card">
+  <article class="card" data-market="sk">
     <div class="body">
       <header><h2>VRHUNAC <span class="mkt" style="font:700 11px/1 system-ui;letter-spacing:.08em;background:#eef3ff;color:#1f4ea3;border-radius:6px;padding:3px 7px;vertical-align:middle">SLOVAKIA</span></h2><span class="sub">shilajit + ashwagandha gummies for men</span></header>
       <div class="grid">
@@ -269,6 +283,35 @@ if(tip){document.querySelectorAll('.bar').forEach(b=>{
   });
   b.addEventListener('mouseleave',()=>tip.hidden=true);
 });}
+const MB = document.getElementById('mbar');
+if (MB) {
+  const chips = [...MB.querySelectorAll('button.chip')];
+  const known = chips.map(c => c.dataset.market);
+  const empty = document.getElementById('mempty');
+  function selectMarket(m, writeHash) {
+    chips.forEach(c => c.classList.toggle('on', c.dataset.market === m));
+    let shown = 0;
+    document.querySelectorAll('[data-market]').forEach(el => {
+      if (el.closest('#mbar')) return;
+      const vis = m === 'all' || el.dataset.market === m;
+      el.hidden = !vis;
+      if (vis && el.classList.contains('card')) shown++;
+    });
+    if (empty) {
+      const chip = chips.find(c => c.dataset.market === m);
+      empty.textContent = 'No landing pages for ' + (chip ? chip.firstChild.textContent.trim() : m) + ' yet.';
+      empty.hidden = shown > 0;
+    }
+    try { localStorage.setItem('lpdash:market', m); } catch (e) {}
+    if (writeHash) history.replaceState(null, '', m === 'all' ? location.pathname + location.search : '#' + m);
+  }
+  chips.forEach(c => c.addEventListener('click', () => selectMarket(c.dataset.market, true)));
+  let init = (location.hash || '').slice(1).toLowerCase();
+  if (!known.includes(init)) { try { init = localStorage.getItem('lpdash:market') || 'all'; } catch (e) { init = 'all'; } }
+  if (!known.includes(init)) init = 'all';
+  selectMarket(init, false);
+  addEventListener('hashchange', () => { const h = location.hash.slice(1).toLowerCase(); if (known.includes(h)) selectMarket(h, false); });
+}
 document.querySelectorAll('textarea[data-note]').forEach(t=>{
   const k='lpnote:'+t.dataset.note;
   t.value=localStorage.getItem(k)||'';
