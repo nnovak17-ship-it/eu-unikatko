@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>LP Dashboard — Unikatko EU</title>
+<style>
+:root{--ink:#15181c;--mut:#6b7480;--line:#e4e7ea;--acc:#0d6b6e;--bg:#f6f7f8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);
+ font:15px/1.5 -apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}
+.lead{color:var(--mut);font-size:14px;margin:0 0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:14px;margin-bottom:14px;
+ display:flex;gap:18px;padding:16px;align-items:flex-start}
+.body{flex:1;min-width:0}
+.shot{flex:none;width:190px;border-radius:12px;overflow:hidden;border:1px solid var(--line);
+ background:#fafafa;display:block;text-decoration:none}
+.shot img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.shot:hover{border-color:var(--acc)}
+.card header{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px;
+ border-bottom:1px solid var(--line);padding-bottom:10px}
+.card h2{font-size:19px;margin:0;letter-spacing:.02em}
+.sub{color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:110px 1fr;gap:8px 14px;align-items:start}
+.k{color:var(--mut);font-size:13px;padding-top:3px}
+.v{font-size:14px;min-width:0}
+.links{display:flex;flex-wrap:wrap;gap:8px}
+.links a{display:inline-block;background:#eef4f4;color:var(--acc);text-decoration:none;
+ padding:6px 11px;border-radius:8px;font-weight:600;font-size:13px}
+.links a:hover{background:#e0eded}
+.missing{display:inline-block;background:#fdeeee;color:#a33;padding:6px 11px;border-radius:8px;
+ font-weight:600;font-size:13px}
+.flag{background:#fff2d6;color:#8a5b00;border:1px solid #f0d79b;padding:3px 9px;border-radius:999px;
+ font-size:12px;font-weight:600;white-space:nowrap}
+.card.needs-img{border-color:#f0d79b;background:#fffdf7}
+.card.needs-img .shot{border-color:#f0d79b}
+.card.needs-img .shot img{opacity:.72}
+ul.tiers{margin:0;padding-left:18px}
+ul.tiers li{margin:2px 0}
+textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;font:inherit;
+ font-size:13px;resize:vertical;background:#fcfcfd}
+textarea:focus{outline:2px solid var(--acc);outline-offset:-1px;background:#fff}
+.ana{margin-bottom:26px}
+.ana h2{font-size:19px;margin:0 0 10px}
+.ana h3{font-size:15px;margin:16px 0 8px}
+.asub{color:var(--mut);font-weight:400;font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:10px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.tv{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.tk{color:var(--mut);font-size:12px;margin-top:2px}
+.chartbox{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 14px;position:relative}
+.chartbox svg{width:100%;height:auto;display:block}
+.bar rect:not(.hit){fill:#2a78d6}
+.bar .hit{fill:transparent}
+.bar:hover rect:not(.hit){fill:#1c5eae}
+.bar.partial rect:not(.hit){fill:#9fc0e8}
+.tile.today{background:#f4f9f9;border-color:#cfe3e3}
+.ax{font-size:9px;fill:#6b7480;text-anchor:middle}
+.gl{stroke:#e4e7ea;stroke-width:1}
+.bl{stroke:#c9ced4;stroke-width:1}
+.tip{position:absolute;background:#15181c;color:#fff;font-size:12px;padding:6px 9px;border-radius:8px;
+ pointer-events:none;white-space:nowrap;z-index:5}
+.tscroll{overflow-x:auto}
+.atab{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px}
+.atab th{text-align:left;color:var(--mut);font-size:12px;font-weight:600;padding:8px 12px;border-bottom:1px solid var(--line)}
+.atab td{padding:8px 12px;font-size:14px;border-bottom:1px solid var(--line)}
+.atab tr:last-child td{border-bottom:0}
+.atab td:nth-child(n+2),.atab th:nth-child(n+2){text-align:right}
+.anote{color:var(--mut);font-size:13px}
+.statbtn{background:#eef4f4;color:var(--acc);border:0;border-radius:8px;padding:7px 12px;
+ font:600 13px inherit;cursor:pointer}
+.statbtn:hover{background:#e0eded}
+.modal{position:fixed;inset:0;background:rgba(10,14,18,.45);display:grid;place-items:center;
+ padding:16px;z-index:50}
+.modal[hidden]{display:none}
+.modal-card{background:#fff;border-radius:14px;padding:20px;max-width:420px;width:100%;
+ max-height:85vh;overflow:auto;position:relative;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.modal-x{position:absolute;right:12px;top:10px;border:0;background:none;font-size:26px;
+ line-height:1;color:var(--mut);cursor:pointer}
+.modal-card h3{font-size:18px;margin:0 0 2px;padding-right:28px}
+.sh{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut);
+ margin:16px 0 6px}
+.srow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+ padding:7px 0;border-bottom:1px solid var(--line)}
+.srow:last-child{border-bottom:0}
+.sl{font-size:14px;color:var(--mut)}
+.sv{font-size:15px;font-weight:700}
+.ss{font-weight:400;color:var(--mut);font-size:12px;margin-left:7px}
+.ptag{font-size:10px;font-weight:700;padding:2px 6px;border-radius:999px;letter-spacing:.03em;text-transform:uppercase}
+.ptag.funnel{background:#e6f2f2;color:#0d6b6e}
+.ptag.store{background:#eef0f2;color:#6b7480}
+.frow{display:grid;grid-template-columns:130px 1fr 96px;gap:10px;align-items:center;margin:7px 0}
+.fl{font-size:13px;color:var(--mut)}
+.ftrack{background:#eef0f2;border-radius:4px;height:12px;overflow:hidden}
+.ffill{background:#2a78d6;height:100%;border-radius:4px}
+.fv{font-size:13px;font-weight:700;text-align:right}
+.fp{color:var(--mut);font-weight:400;margin-left:6px;font-size:12px}
+@media(max-width:600px){.frow{grid-template-columns:104px 1fr 78px}}
+.note-caveat{background:#fff8e6;border:1px solid #f0e0b0;border-radius:10px;padding:10px 12px;
+ font-size:13px;color:#6b5a20;margin-bottom:18px}
+footer{color:var(--mut);font-size:12px;margin-top:24px;text-align:center}
+@media(max-width:760px){
+  .card{flex-direction:column-reverse;gap:14px}
+  .shot{width:100%}
+  .shot img{aspect-ratio:16/9}
+  .grid{grid-template-columns:1fr;gap:4px 0}
+  .k{padding-top:10px;font-weight:600}
+}
+</style></head><body><div class="wrap">
+<h1>LP Dashboard — Unikatko EU</h1>
+<p class="lead">All generated landing pages, Shopify products and current pricing.
+Prices are in each market's own currency, as charged at checkout — never converted or summed across markets. Brand names are ours and stay as-is;
+the landing pages themselves remain in Serbian.</p>
+
+<div class="note-caveat"><b>About notes:</b> notes are stored locally in this browser
+(localStorage) and are <b>not shared</b> with anyone else.</div>
+
+  <article class="card">
+    <div class="body">
+      <header><h2>VRHUNAC <span class="mkt" style="font:700 11px/1 system-ui;letter-spacing:.08em;background:#eef3ff;color:#1f4ea3;border-radius:6px;padding:3px 7px;vertical-align:middle">HUNGARY</span></h2><span class="sub">shilajit + ashwagandha gummies for men</span></header>
+      <div class="grid">
+        <div class="k">Landing pages</div>
+        <div class="v links">
+          <span class="missing">LP A — not built</span>
+          <a href="https://eu.unikatko.com/hu-vrhunac-gumice-2/" target="_blank" rel="noopener">LP B — replica ↗</a>
+          
+        </div>
+        <div class="k">Shopify</div>
+        <div class="v links">
+          <a href="https://hu.unikatko.eu/products/vrhunac-gumicukor-ferfiaknak" target="_blank" rel="noopener">Storefront ↗</a>
+          <a href="https://admin.shopify.com/store/3rhpu1-ag/products/11110097650001" target="_blank" rel="noopener">Admin ↗</a>
+        </div>
+        <div class="k">Pricing</div><div class="v"><ul class="tiers"><li>1 doboz: <b>12 990 Ft</b></li><li>3 doboz: <b>26 070 Ft</b></li><li>5 doboz: <b>38 950 Ft</b></li></ul></div>
+        <div class="k">Colours</div><div class="v">—</div>
+        <div class="k">Note</div>
+        <div class="v"><textarea data-note="hu-vrhunac-gumice" rows="2" placeholder="Your note…"></textarea></div>
+        <div class="k">Data</div>
+        <div class="v"><button class="statbtn" data-stat="hu-vrhunac-gumice" data-brand="VRHUNAC">📊 Analytics</button></div>
+      </div>
+    </div>
+    <a class="shot" href="https://eu.unikatko.com/hu-vrhunac-gumice-2/" target="_blank" rel="noopener" title="Open LP">
+      <img src="https://eu.unikatko.com/hu-vrhunac-gumice-2/assets/product.jpg" alt="VRHUNAC product photo" loading="lazy">
+    </a>
+  </article>
+<footer>Generated from page.json configs · eu.unikatko.com</footer>
+<div id="statwrap" class="modal" hidden>
+  <div class="modal-card">
+    <button class="modal-x" id="statx" aria-label="Close">×</button>
+    <h3 id="stath">—</h3>
+    <p class="asub" id="statsub"></p>
+    <div id="statbody"></div>
+  </div>
+</div>
+</div>
+<script>
+const PSTATS = {};
+const WINDOW_D = 7;
+const fmtN = n => (n===null||n===undefined) ? '—' : String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+function row(label, val, sub){
+  return `<div class="srow"><div class="sl">${label}</div>`+
+         `<div class="sv">${val}${sub?`<span class="ss">${sub}</span>`:''}</div></div>`;
+}
+function openStats(slug, brand){
+  const d = PSTATS[slug] || {};
+  document.getElementById('stath').textContent = brand + ' — analytics';
+  document.getElementById('statsub').textContent =
+    'Shopify: last 30 days · Pixel: last ' + WINDOW_D + ' days';
+  const noBeh = !d.views;
+  const behaviour = noBeh
+    ? '<p class="anote">No pixel data yet for this LP. Views, time on page and ATC '+
+      'clicks appear here automatically once it gets traffic — the events are already live '+
+      'on both LP A and LP B.</p>'
+    : row('Visits', fmtN(d.views)) +
+      row('Stayed 30s+', fmtN(d.engaged), d.engagedPct!=null?d.engagedPct+'%':'') +
+      row('Add-to-cart clicks', fmtN(d.atc), d.atcPct!=null?d.atcPct+'%':'') +
+      row('Visit → order', (d.cvr!=null? d.cvr+'%' : '—'));
+  const sales = row('Orders', fmtN(d.orders)) +
+                row('Units sold', fmtN(d.units)) +
+                row('Revenue', fmtN(d.revenue)+' '+(d.cur||'')) +
+                row('AOV', fmtN(d.aov)+' '+(d.cur||''));
+
+  let extras = '';
+  (d.extras || []).forEach(x => {
+    extras += `<h4 class="sh">${x.label}</h4>` + (x.views
+      ? row('Visits', fmtN(x.views)) +
+        row('Stayed 30s+', fmtN(x.engaged)) +
+        row(x.clickLabel, fmtN(x.clicks), x.ctr!=null ? x.ctr+'%' : '')
+      : '<p class="anote">No pixel data yet — events are live, numbers appear once it gets traffic.</p>');
+  });
+
+  document.getElementById('statbody').innerHTML =
+    '<h4 class="sh">On-page behaviour</h4>' + behaviour +
+    extras +
+    '<h4 class="sh">Sales</h4>' + sales +
+    (d.orders ? '' : '<p class="anote">No orders on this funnel yet.</p>');
+  document.getElementById('statwrap').hidden = false;
+}
+document.querySelectorAll('.statbtn').forEach(b=>
+  b.addEventListener('click',()=>openStats(b.dataset.stat, b.dataset.brand)));
+document.getElementById('statx').addEventListener('click',()=>document.getElementById('statwrap').hidden=true);
+document.getElementById('statwrap').addEventListener('click',e=>{
+  if(e.target.id==='statwrap') e.target.hidden=true;});
+addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('statwrap').hidden=true;});
+
+const tip=document.getElementById('tip');
+if(tip){document.querySelectorAll('.bar').forEach(b=>{
+  b.addEventListener('mouseenter',()=>{
+    tip.textContent=`${b.dataset.d}: ${b.dataset.o} orders · ${b.dataset.r}`;
+    tip.hidden=false;
+    const r=b.getBoundingClientRect(),c=tip.offsetParent.getBoundingClientRect();
+    tip.style.left=Math.min(r.left-c.left, c.width-tip.offsetWidth-8)+'px';
+    tip.style.top=(r.top-c.top-30)+'px';
+  });
+  b.addEventListener('mouseleave',()=>tip.hidden=true);
+});}
+document.querySelectorAll('textarea[data-note]').forEach(t=>{
+  const k='lpnote:'+t.dataset.note;
+  t.value=localStorage.getItem(k)||'';
+  t.addEventListener('input',()=>localStorage.setItem(k,t.value));
+});
+</script></body></html>
