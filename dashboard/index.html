@@ -290,12 +290,11 @@ if (MB) {
       empty.textContent = 'No landing pages for ' + (chip ? chip.firstChild.textContent.trim() : m) + ' yet.';
       empty.hidden = shown > 0;
     }
-    try { localStorage.setItem('lpdash:market', m); } catch (e) {}
     if (writeHash) history.replaceState(null, '', m === 'all' ? location.pathname + location.search : '#' + m);
   }
   chips.forEach(c => c.addEventListener('click', () => selectMarket(c.dataset.market, true)));
+
   let init = (location.hash || '').slice(1).toLowerCase();
-  if (!known.includes(init)) { try { init = localStorage.getItem('lpdash:market') || 'all'; } catch (e) { init = 'all'; } }
   if (!known.includes(init)) init = 'all';
   selectMarket(init, false);
   addEventListener('hashchange', () => { const h = location.hash.slice(1).toLowerCase(); if (known.includes(h)) selectMarket(h, false); });
