@@ -306,7 +306,7 @@ each landing page is written in its market's own language. Pick a country above 
 </div>
 </div>
 <script>
-const PSTATS = {"cz-vrhunac-gumice": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "", "extras": [{"label": "LP D · capsules", "slug": "cz-vrhunac-kapsule-2", "views": null, "engaged": null, "clicks": null, "clickLabel": "Add-to-cart clicks", "ctr": null}]}, "cz-vrhunac-kapsule": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": ""}, "hu-vrhunac-gumice": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "", "extras": [{"label": "LP D · capsules", "slug": "hu-vrhunac-kapsule-2", "views": null, "engaged": null, "clicks": null, "clickLabel": "Add-to-cart clicks", "ctr": null}]}, "hu-vrhunac-kapsule": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": ""}, "sk-vrhunac-gumice": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "", "extras": [{"label": "LP D · capsules", "slug": "sk-vrhunac-kapsule-2", "views": null, "engaged": null, "clicks": null, "clickLabel": "Add-to-cart clicks", "ctr": null}]}, "sk-vrhunac-kapsule": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": ""}};
+const PSTATS = {"cz-vrhunac-gumice": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "Kč", "extras": [{"label": "LP D · capsules", "slug": "cz-vrhunac-kapsule-2", "views": null, "engaged": null, "clicks": null, "clickLabel": "Add-to-cart clicks", "ctr": null}], "revenueFmt": "0 Kč", "aovFmt": "0 Kč"}, "cz-vrhunac-kapsule": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "Kč", "revenueFmt": "0 Kč", "aovFmt": "0 Kč"}, "hu-vrhunac-gumice": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "Ft", "extras": [{"label": "LP D · capsules", "slug": "hu-vrhunac-kapsule-2", "views": null, "engaged": null, "clicks": null, "clickLabel": "Add-to-cart clicks", "ctr": null}], "revenueFmt": "0 Ft", "aovFmt": "0 Ft"}, "hu-vrhunac-kapsule": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "Ft", "revenueFmt": "0 Ft", "aovFmt": "0 Ft"}, "sk-vrhunac-gumice": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "€", "extras": [{"label": "LP D · capsules", "slug": "sk-vrhunac-kapsule-2", "views": null, "engaged": null, "clicks": null, "clickLabel": "Add-to-cart clicks", "ctr": null}], "revenueFmt": "0,00 €", "aovFmt": "0,00 €"}, "sk-vrhunac-kapsule": {"views": null, "engaged": null, "atc": null, "orders": 0, "units": 0, "revenue": 0, "aov": 0, "cur": "€", "revenueFmt": "0,00 €", "aovFmt": "0,00 €"}};
 const WINDOW_D = 7;
 const fmtN = n => (n===null||n===undefined) ? '—' : String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
 function row(label, val, sub){
@@ -329,8 +329,8 @@ function openStats(slug, brand){
       row('Visit → order', (d.cvr!=null? d.cvr+'%' : '—'));
   const sales = row('Orders', fmtN(d.orders)) +
                 row('Units sold', fmtN(d.units)) +
-                row('Revenue', fmtN(d.revenue)+' '+(d.cur||'')) +
-                row('AOV', fmtN(d.aov)+' '+(d.cur||''));
+                row('Revenue', d.revenueFmt || (fmtN(d.revenue)+' '+(d.cur||''))) +
+                row('AOV', d.aovFmt || (fmtN(d.aov)+' '+(d.cur||'')));
 
   let extras = '';
   (d.extras || []).forEach(x => {
