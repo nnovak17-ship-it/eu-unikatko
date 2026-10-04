@@ -816,15 +816,15 @@ window.lpSlug = function(){
     <h2 class="sf">SHILAJIT COFFEE, alebo obyčajná káva?</h2>
     <p class="lead">Hubových káv je dnes veľa. Šilajit v nich väčšinou nenájdeš — a obyčajná káva ti dá iba kofeín.</p>
     <div class="vstabs">
-      <button class="vstab on" onclick="vsPick(0)">Hubová káva</button>
-      <button class="vstab" onclick="vsPick(1)">Obyčajná káva</button>
+      <button class="vstab on" onclick="vsPick(0)">Obyčajná káva</button>
+      <button class="vstab" onclick="vsPick(1)">Hubová káva</button>
     </div>
   </div>
   <div class="vsband"><div class="wrap">
     <table class="vst">
       <tr><th class="q sf">V čom je rozdiel?</th>
           <th><img class="himg" src="assets/tier-classic.jpg" alt="PREMIUM SHILAJIT COFFEE" width="160" height="160" loading="lazy" decoding="async">PREMIUM</th>
-          <th><span class="hem" id="vs-em">🍄</span><br><span id="vs-nm">Hubová káva</span></th></tr>
+          <th><span class="hem" id="vs-em">☕</span><br><span id="vs-nm">Obyčajná káva</span></th></tr>
       <tbody id="vs-rows"></tbody>
     </table>
   </div></div>
@@ -1083,20 +1083,20 @@ function renderIng(){
 function pickItab(i){ itab = i; renderIng(); }
 
 const VS = [
-  {em:"🍄", nm:"Hubová káva", rows:[
-    ["Šilajit","500 mg","x"],
-    ["Huby","6 000 mg*","y"],
-    ["Kofeín z 2 zdrojov","y","Niekedy"],
-    ["L-teanín","y","Zriedka"],
-    ["Kolagén + vitamíny","y","Zriedka"],
-    ["Príchuť lieskový orech","y","Podľa značky"]]},
   {em:"☕", nm:"Obyčajná káva", rows:[
     ["Šilajit","500 mg","x"],
     ["Huby","6 000 mg*","x"],
     ["Kofeín z 2 zdrojov","y","x"],
     ["L-teanín","y","x"],
     ["Kolagén + vitamíny","y","x"],
-    ["Príchuť lieskový orech","y","x"]]}
+    ["Príchuť lieskový orech","y","x"]]},
+  {em:"🍄", nm:"Hubová káva", rows:[
+    ["Šilajit","500 mg","x"],
+    ["Huby","6 000 mg*","y"],
+    ["Kofeín z 2 zdrojov","y","Niekedy"],
+    ["L-teanín","y","Zriedka"],
+    ["Kolagén + vitamíny","y","Zriedka"],
+    ["Príchuť lieskový orech","y","Podľa značky"]]}
 ];
 let vsi = 0;
 function renderVs(){
