@@ -831,8 +831,8 @@ window.lpSlug = function(){
 
 const TIERS = [
   { qty:1, unitC:3499, title:"Kúp 1",                  sub:"1 fľaštička",  badge:null,                chip:'plain', variantId:"45408831209654", ship:true  },
-  { qty:3, unitC:2299, title:"Kúp 2, získaj 1 ZDARMA", sub:"3 fľaštičky",  badge:"NAJPOPULÁRNEJŠIE",  chip:'g',     variantId:"45408831242422", ship:false },
-  { qty:5, unitC:2099, title:"Kúp 3, získaj 2 ZDARMA", sub:"5 fľaštičiek", badge:"NAJVÝHODNEJŠIE", chip:'d',     variantId:"45408831275190", ship:false },
+  { qty:3, unitC:2299, title:"Kúp 2, získaj 1 ZDARMA", sub:"3 fľaštičky + Doprava zadarmo",  badge:"NAJPOPULÁRNEJŠIE",  chip:'g',     variantId:"45408831242422", ship:false },
+  { qty:5, unitC:2099, title:"Kúp 3, získaj 2 ZDARMA", sub:"5 fľaštičiek + Doprava zadarmo", badge:"NAJVÝHODNEJŠIE", chip:'d',     variantId:"45408831275190", ship:false },
 ];
 const COMPARE_AT_C = 8999;          
 const SINGLE_SHIPS_FREE = true;     
@@ -888,7 +888,7 @@ function render(){
   document.getElementById('anchor-sub').textContent = 'Zásoba na '+(30*t.qty)+' dní | menej ako '+perDay(t.unitC)+' denne';
   document.getElementById('atc-label').textContent = 'Pridať do košíka · ' + fmt(total) + (t.ship && !SINGLE_SHIPS_FREE ? SHIP_SUFFIX : '');
   const rp = document.getElementById('recap-price'); if(rp) rp.textContent = fmt(total);
-  const rs = document.getElementById('recap-sub'); if(rs) rs.textContent = t.sub + ' · ' + (30*t.qty) + ' dní rutiny';
+  const rs = document.getElementById('recap-sub'); if(rs) rs.textContent = t.sub.split(' + ')[0] + ' · ' + (30*t.qty) + ' dní rutiny';
 }
 function pickTier(i){ sel = i; render(); }
 function buyTier(i){ sel = i; render(); kupi(); }

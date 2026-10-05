@@ -79,7 +79,7 @@ header a.cart{color:var(--ink);text-decoration:none;font-size:20px}
 .opt img{width:44px;height:44px;object-fit:cover;border-radius:8px;flex:none}
 .opt .t b{display:block;font-size:15px}
 .opt .t span{font-size:13px;color:var(--mut)}
-.opt .pr{margin-left:auto;text-align:right}
+.opt .pr{margin-left:auto;text-align:right;white-space:nowrap}
 .opt .pr b{display:block;font-size:15px}
 .opt .pr s{font-size:13px;color:#b04a4a}
 .opt .bdg{position:absolute;top:-10px;right:12px;font-size:11px;font-weight:800;
@@ -484,8 +484,8 @@ window.lpSlug = function(){
 
 const OPTS = [
   { title:"Kup 1", sub:"1 balení", qty:1, total:799, was:1999, badge:null, variantId:"59014897697116", ship:true },
-  { title:"Kup 2, získej 1 ZDARMA", sub:"3 balení", qty:3, total:1647, was:5997, badge:"NEJOBLÍBENĚJŠÍ", variantId:"59014897729884", ship:false },
-  { title:"Kup 3, získej 2 ZDARMA", sub:"5 balení", qty:5, total:2495, was:9995, badge:"NEJLEPŠÍ HODNOTA", variantId:"59014897762652", ship:false }
+  { title:"Kup 2, získej 1 ZDARMA", sub:"3 balení + Doprava zdarma", qty:3, total:1647, was:5997, badge:"NEJOBLÍBENĚJŠÍ", variantId:"59014897729884", ship:false },
+  { title:"Kup 3, získej 2 ZDARMA", sub:"5 balení + Doprava zdarma", qty:5, total:2495, was:9995, badge:"NEJLEPŠÍ HODNOTA", variantId:"59014897762652", ship:false }
 ];
 const GIFTS = [
   {at:1, cap:"PDF průvodce mužskou formou"},
